@@ -1,0 +1,552 @@
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="./assets/css/style.css">
+    <link rel="stylesheet" href="./assets/css/responsive.css">
+    <meta name="theme-color" content="#f19e36" />
+
+    <link rel="icon" type="image/x-icon" href="./assets/favicon/favicon.ico">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <style>
+.frens-profile {
+    display: flex;
+    align-items: center;
+    gap: 5px; /* «Ì‰ Œÿ —« «÷«›Â ò‰Ìœ Ì« „ﬁœ«— „ÊÃÊœ —« «›“«Ì‘ œÂÌœ */
+}
+
+.task-profile-icon {
+    flex-shrink: 0;
+    width: 40px; /* «‰œ«“Â ¬ÌòÊ‰ —« ò„Ì »“—ê — ò‰Ìœ */
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.task-profile-data {
+    flex-grow: 1;
+}
+
+.task-profile-data h4 {
+    margin-bottom: 3px; /* ›«’·Â »Ì‰ ‰«„  ”ò Ê „ﬁœ«— ”òÂ */
+}
+ .task-link {
+    display: block;
+    text-decoration: none;
+    color: white !important; /*  ‰ŸÌ„ —‰ê »Â ”›Ìœ Ê «” ›«œÂ «“ !important »—«Ì «ÿ„Ì‰«‰ */
+}
+
+.task-link:hover {
+    background-color: rgba(255, 255, 255, 0.1); /*  €ÌÌ— —‰ê Å”ù“„Ì‰Â Â‰ê«„ hover »—«Ì »Â»Êœ UX */
+}
+
+.task-link:visited {
+    color: white; /* «ÿ„Ì‰«‰ «“ «Ì‰òÂ ·Ì‰òùÂ«Ì »«“œÌœ ‘œÂ ‰Ì“ ”›Ìœ »«ﬁÌ »„«‰‰œ */
+}
+
+.task-link h4,
+.task-link span {
+    color: white; /* «ÿ„Ì‰«‰ «“ «Ì‰òÂ ⁄‰Ê«‰ Ê „ ‰ ‰Ì“ ”›Ìœ »«‘‰œ */
+}
+    .no-blue-link {
+        color: inherit;
+        text-decoration: none;
+    }
+    .no-blue-link:hover,
+    .no-blue-link:visited,
+    .no-blue-link:active {
+        color: inherit;
+        text-decoration: none;
+    }
+.frens-data {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+    .frens-list {
+        display: flex;
+        flex-direction: column;
+        gap: 2px; /* ›«’·Â »Ì‰  ”òùÂ« */
+    }
+
+    .task-box {
+        background-color: rgba(255, 255, 255, 0.1); /* Å”ù“„Ì‰Â ‰Ì„Âù‘›«› */
+        border-radius: 10px; /* êÊ‘ÂùÂ«Ì ê—œ */
+        overflow: hidden; /* »—«Ì Õ›Ÿ êÊ‘ÂùÂ«Ì ê—œ */
+    }
+
+    .frens-data {
+        padding: 15px;
+    }
+
+    /* «” «Ì·ùÂ«Ì ﬁ»·Ì —« Õ›Ÿ ò‰Ìœ */
+    .frens-profile {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+    }
+
+    .task-profile-icon {
+        flex-shrink: 0;
+        width: 40px;
+        height: 40px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .task-profile-data {
+        flex-grow: 1;
+    }
+
+    .task-profile-data h4 {
+        margin-bottom: 5px;
+    }
+.check-button {
+    width: 80px;
+    height: 40px;
+    border-radius: 20px;
+    background-color: #333;
+    border: 2px solid #555;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.check-button:not(.checked):not(.claimed) {
+    background-color: #4CAF50;
+}
+
+.check-button:not(.checked):not(.claimed):hover {
+    background-color: #45a049;
+}
+
+.check-button.checked:not(.claimed) {
+    background-color: #808080; /* —‰ê ‰«—‰ÃÌ »—«Ì Õ«·  Claim */
+}
+
+.check-button.checked:not(.claimed):hover {
+    background-color: #808080;
+}
+
+.check-button.claimed {
+    background-color: #808080; /* —‰ê Œ«ò” —Ì »—«Ì Õ«·  Claimed */
+    cursor: default;
+}
+
+.button-text {
+    display: inline;
+}
+
+.loader {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    display: inline-block;
+    position: absolute;
+    border: 2px solid;
+    border-color: #FFF #FFF transparent transparent;
+    box-sizing: border-box;
+    animation: rotation 1s linear infinite;
+}
+
+.loader::after,
+.loader::before {
+    content: '';  
+    box-sizing: border-box;
+    position: absolute;
+    left: -2px;
+    top: -2px;
+    width: inherit;
+    height: inherit;
+    border: 2px solid;
+    border-radius: 50%;
+    animation: rotationBack 0.5s linear infinite;
+}
+
+.loader::after {
+    border-color: transparent transparent #FF3D00 #FF3D00;
+    transform: rotate(45deg);
+}
+
+.loader::before {
+    border-color: #FFF #FFF transparent transparent;
+    transform: rotate(135deg);
+}
+.select-none {
+    user-select: none; /* Ã·ÊêÌ—Ì «“ «‰ Œ«» „ ‰ */
+    -webkit-user-select: none; /* »—«Ì „—Ê—ê—Â«Ì WebKit */
+    -moz-user-select: none; /* »—«Ì Firefox */
+    pointer-events: none; /* Ã·ÊêÌ—Ì «“  ⁄«„·«  */
+}
+@keyframes rotation {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+} 
+
+@keyframes rotationBack {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(-360deg); }
+}  
+    </style>
+</head>
+<body class="earn">
+
+    <div class="haeder">
+        <a href="/noshow?chat_id=5959025771">
+            <svg width="25px" height="25px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M22 11.9299H2" stroke="#ffffff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M8.00009 19L2.84009 14C2.5677 13.7429 2.35071 13.433 2.20239 13.0891C2.05407 12.7452 1.97754 12.3745 1.97754 12C1.97754 11.6255 2.05407 11.2548 2.20239 10.9109C2.35071 10.567 2.5677 10.2571 2.84009 10L8.00009 5" stroke="#ffffff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+        </a>
+        <!-- <h1>Notcoin</h1> -->
+    </div>
+
+    <div class="earn-more">
+        <img src="./assets/images/golden.png" class="select-none" width="80px">
+        <h3>Earn more coins</h3>
+    </div>
+
+<div class="frens-list">
+                        <div class="task-box">
+                <a href="https://factweb.ir" target="_blank" onclick="updateUsersAll(11, 5959025771)" class="task-link no-blue-link">
+                    <div class="frens-data">
+                        <div class="frens-profile">
+                           <div class="task-profile-icon">
+                                <img src="./assets/images/i-other2.png" alt="Other" width="50px">                                 </div>
+                            <div class="task-profile-data">
+                                <h4>Wesbite Factweb</h4>
+                                <div>
+                                    <img src="./assets/images/coin.png" width="15px" alt="Coin">
+                                    <span>300 coins</span>
+                                </div>
+                            </div>
+                        </div>
+<div class="task-action" data-task-id="11" data-coin="300" data-link="https://factweb.ir" data-type="other">
+        <button class="check-button checked ">
+        <span class="button-text">
+            Claimed        </span>
+        <span class="loader" style="display: none;"></span>
+    </button>
+</div>
+                    </div>
+                </a>
+            </div>
+                    <div class="task-box">
+                <a href="https://www.instagram.com/realshadmehr/?hl=fa" target="_blank" onclick="updateUsersAll(12, 5959025771)" class="task-link no-blue-link">
+                    <div class="frens-data">
+                        <div class="frens-profile">
+                           <div class="task-profile-icon">
+                                <img src="./assets/images/i-instagram2.png" alt="Instagram" width="50px">                                 </div>
+                            <div class="task-profile-data">
+                                <h4>Join Instagram Shadmehr</h4>
+                                <div>
+                                    <img src="./assets/images/coin.png" width="15px" alt="Coin">
+                                    <span>300 coins</span>
+                                </div>
+                            </div>
+                        </div>
+<div class="task-action" data-task-id="12" data-coin="300" data-link="https://www.instagram.com/realshadmehr/?hl=fa" data-type="instagram">
+        <button class="check-button checked ">
+        <span class="button-text">
+            Claimed        </span>
+        <span class="loader" style="display: none;"></span>
+    </button>
+</div>
+                    </div>
+                </a>
+            </div>
+                    <div class="task-box">
+                <a href="https://twitter.com/elonmusk" target="_blank" onclick="updateUsersAll(13, 5959025771)" class="task-link no-blue-link">
+                    <div class="frens-data">
+                        <div class="frens-profile">
+                           <div class="task-profile-icon">
+                                <img src="./assets/images/i-x2.png" alt="X" width="50px">                                 </div>
+                            <div class="task-profile-data">
+                                <h4>Join X Elon Musk</h4>
+                                <div>
+                                    <img src="./assets/images/coin.png" width="15px" alt="Coin">
+                                    <span>200 coins</span>
+                                </div>
+                            </div>
+                        </div>
+<div class="task-action" data-task-id="13" data-coin="200" data-link="https://twitter.com/elonmusk" data-type="x">
+        <button class="check-button checked ">
+        <span class="button-text">
+            Claimed        </span>
+        <span class="loader" style="display: none;"></span>
+    </button>
+</div>
+                    </div>
+                </a>
+            </div>
+                    <div class="task-box">
+                <a href="https://www.youtube.com/channel/UCX6OQ3DkcsbYNE6H8uQQuVA" target="_blank" onclick="updateUsersAll(14, 5959025771)" class="task-link no-blue-link">
+                    <div class="frens-data">
+                        <div class="frens-profile">
+                           <div class="task-profile-icon">
+                                <img src="./assets/images/i-youtube2.png" alt="YouTube" width="50px">                                 </div>
+                            <div class="task-profile-data">
+                                <h4>Watch Youtube MrBeast</h4>
+                                <div>
+                                    <img src="./assets/images/coin.png" width="15px" alt="Coin">
+                                    <span>200 coins</span>
+                                </div>
+                            </div>
+                        </div>
+<div class="task-action" data-task-id="14" data-coin="200" data-link="https://www.youtube.com/channel/UCX6OQ3DkcsbYNE6H8uQQuVA" data-type="youtube">
+        <button class="check-button checked ">
+        <span class="button-text">
+            Claimed        </span>
+        <span class="loader" style="display: none;"></span>
+    </button>
+</div>
+                    </div>
+                </a>
+            </div>
+                    <div class="task-box">
+                <a href="https://t.me/Maxupload_fwbot" target="_blank" onclick="updateUsersAll(15, 5959025771)" class="task-link no-blue-link">
+                    <div class="frens-data">
+                        <div class="frens-profile">
+                           <div class="task-profile-icon">
+                                <img src="./assets/images/i-bot2.png" alt="Bot" width="50px">                                 </div>
+                            <div class="task-profile-data">
+                                <h4>Uploader Bot</h4>
+                                <div>
+                                    <img src="./assets/images/coin.png" width="15px" alt="Coin">
+                                    <span>250 coins</span>
+                                </div>
+                            </div>
+                        </div>
+<div class="task-action" data-task-id="15" data-coin="250" data-link="https://t.me/Maxupload_fwbot" data-type="bot">
+        <button class="check-button checked ">
+        <span class="button-text">
+            Claimed        </span>
+        <span class="loader" style="display: none;"></span>
+    </button>
+</div>
+                    </div>
+                </a>
+            </div>
+                    <div class="task-box">
+                <a href="https://t.me/factwebir" target="_blank" onclick="updateUsersAll(16, 5959025771)" class="task-link no-blue-link">
+                    <div class="frens-data">
+                        <div class="frens-profile">
+                           <div class="task-profile-icon">
+                                <img src="./assets/images/i-channel2.png" alt="Channel" width="50px">                                 </div>
+                            <div class="task-profile-data">
+                                <h4>Join Factwebir Channel</h4>
+                                <div>
+                                    <img src="./assets/images/coin.png" width="15px" alt="Coin">
+                                    <span>550 coins</span>
+                                </div>
+                            </div>
+                        </div>
+<div class="task-action" data-task-id="16" data-coin="550" data-link="https://t.me/factwebir" data-type="channel">
+        <button class="check-button checked ">
+        <span class="button-text">
+            Claimed        </span>
+        <span class="loader" style="display: none;"></span>
+    </button>
+</div>
+                    </div>
+                </a>
+            </div>
+                    <div class="task-box">
+                <a href="https://t.me/factweb_projects" target="_blank" onclick="updateUsersAll(17, 5959025771)" class="task-link no-blue-link">
+                    <div class="frens-data">
+                        <div class="frens-profile">
+                           <div class="task-profile-icon">
+                                <img src="./assets/images/i-channel2.png" alt="Channel" width="50px">                                 </div>
+                            <div class="task-profile-data">
+                                <h4>Join Factweb Projects Channel</h4>
+                                <div>
+                                    <img src="./assets/images/coin.png" width="15px" alt="Coin">
+                                    <span>540 coins</span>
+                                </div>
+                            </div>
+                        </div>
+<div class="task-action" data-task-id="17" data-coin="540" data-link="https://t.me/factweb_projects" data-type="channel">
+        <button class="check-button checked ">
+        <span class="button-text">
+            Claimed        </span>
+        <span class="loader" style="display: none;"></span>
+    </button>
+</div>
+                    </div>
+                </a>
+            </div>
+            </div>
+
+<script>
+function updateUsersAll(taskId, chatId, taskType, coinAmount) {
+    const button = document.querySelector(`.task-action[data-task-id="${taskId}"] .check-button`);
+    
+    if (button.classList.contains('checked')) {
+        return;
+    }
+
+    const buttonText = button.querySelector('.button-text');
+    const loader = button.querySelector('.loader');
+
+    button.classList.add('checking');
+    buttonText.style.display = 'none';
+    loader.style.display = 'inline-block';
+
+    localStorage.setItem(`taskStartTime_${taskId}`, Date.now());
+
+    setTimeout(() => {
+        if (taskType === 'channel') {
+            checkChannelMembership(chatId, taskId, button, loader, buttonText, coinAmount);
+        } else {
+            performUpdate(taskId, chatId, button, loader, buttonText, coinAmount);
+        }
+    }, 60000);
+}
+
+function checkChannelMembership(chatId, taskId, button, loader, buttonText, coinAmount) {
+  fetch('check_channel_membership.php', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded',
+    },
+    body: 'chat_id=' + chatId + '&task_id=' + taskId
+  })
+    .then(response => response.json())
+    .then(data => {
+      if (data.is_member) {
+        performUpdate(taskId, chatId, button, loader, buttonText, coinAmount);
+      } else {
+        // User is not a member, reset button state
+        loader.style.display = 'none';
+        buttonText.style.display = 'inline';
+        buttonText.textContent = 'Check';
+      }
+    })
+    .catch((error) => {
+      console.error('Error:', error);
+      button.classList.remove('checking');
+      loader.style.display = 'none';
+      buttonText.style.display = 'inline';
+      buttonText.textContent = 'Check';
+    })
+    .finally(() => {
+      localStorage.removeItem(`taskStartTime_${taskId}`);
+    });
+}
+
+
+function performUpdate(taskId, chatId, button, loader, buttonText, coinAmount) {
+    fetch('update_usersall.php', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        body: 'task_id=' + taskId + '&chat_id=' + chatId
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            console.log('UsersAll updated successfully');
+            updateUserCoins(chatId, coinAmount);
+        } else {
+            console.error('Failed to update UsersAll');
+        }
+        button.classList.add('checked');
+        buttonText.textContent = 'Claimed';
+    })
+    .catch((error) => {
+        console.error('Error:', error);
+        button.classList.add('checked');
+        buttonText.textContent = 'Claimed';
+    })
+    .finally(() => {
+        button.classList.remove('checking');
+        loader.style.display = 'none';
+        buttonText.style.display = 'inline';
+        localStorage.removeItem(`taskStartTime_${taskId}`);
+    });
+}
+
+function updateUserCoins(chatId, coinAmount) {
+    fetch('update_user_coins.php', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        body: 'chat_id=' + chatId + '&coin_amount=' + coinAmount
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            console.log('User coins updated successfully');
+        } else {
+            console.error('Failed to update user coins');
+        }
+    })
+    .catch((error) => {
+        console.error('Error updating user coins:', error);
+    });
+}
+
+function checkTimerStatus() {
+    document.querySelectorAll('.task-action').forEach(taskAction => {
+        const taskId = taskAction.dataset.taskId;
+        const startTime = localStorage.getItem(`taskStartTime_${taskId}`);
+        if (startTime) {
+            const elapsedTime = Date.now() - parseInt(startTime);
+            const button = taskAction.querySelector('.check-button');
+            const buttonText = button.querySelector('.button-text');
+            const loader = button.querySelector('.loader');
+
+            if (elapsedTime < 60000) {
+                //  «Ì„— Â‰Ê“ œ— Õ«· «Ã—«” 
+                button.classList.add('checking');
+                buttonText.style.display = 'none';
+                loader.style.display = 'inline-block';
+                setTimeout(() => {
+                    performUpdate(taskId, "5959025771", button, loader, buttonText, taskAction.dataset.coin);
+                }, 60000 - elapsedTime);
+            } else {
+                //  «Ì„— »Â Å«Ì«‰ —”ÌœÂ «” 
+                performUpdate(taskId, "5959025771", button, loader, buttonText, taskAction.dataset.coin);
+            }
+        }
+    });
+}
+
+document.addEventListener('DOMContentLoaded', checkTimerStatus);
+
+document.querySelectorAll('.task-link').forEach(link => {
+    link.addEventListener('click', function(event) {
+        const button = this.querySelector('.check-button');
+        
+        if (button.classList.contains('checked')) {
+            return;
+        }
+
+        event.preventDefault();
+        const taskAction = this.querySelector('.task-action');
+        const taskId = taskAction.dataset.taskId;
+        const taskType = taskAction.dataset.type;
+        const coinAmount = taskAction.dataset.coin;
+        const chatId = "5959025771";
+        updateUsersAll(taskId, chatId, taskType, coinAmount);
+        
+        window.open(this.href, '_blank');
+    });
+});
+</script>
+</body>
+</html>
